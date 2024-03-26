@@ -18,7 +18,7 @@ public class AmazonCrawlerTest {
 
     @Test
     public void testGenerator() throws Exception {
-        cloudService.generateWordCloud("https://www.amazon.com/gp/product/B0CL5KNB9M");
+        cloudService.generateWordCloudAsync("https://www.amazon.com/gp/product/B0CL5KNB9M");
 
     }
 }

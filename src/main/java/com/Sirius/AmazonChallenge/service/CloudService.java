@@ -4,6 +4,7 @@ import com.Sirius.AmazonChallenge.crawler.AmazonCrawler;
 import com.Sirius.AmazonChallenge.generator.CloudGenerator;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -14,13 +15,14 @@ import java.util.concurrent.Executors;
 @Service
 public class CloudService {
 
-    private final ExecutorService executorService = Executors.newFixedThreadPool(10); // Ejemplo: 10 hilos en el pool
+    private final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     @Autowired
     private AmazonCrawler crawler;
     @Autowired
     private CloudGenerator generator;
 
+    @Cacheable(value = "wordCloudCache", key = "#productUrl")
     public CompletableFuture<Map<String, Integer>> generateWordCloudAsync(String productUrl) {
         return crawler.crawlProductAsync(productUrl)
                 .thenCompose(description -> CompletableFuture.supplyAsync(() -> generator.generateWordCloud(description), executorService));

@@ -20,9 +20,9 @@ public class AmazonCrawler {
 
     public CompletableFuture<String> crawlProductAsync(String productUrl) {
         return CompletableFuture.supplyAsync(() -> {
-            System.out.println("Creando nuevo hilo: " + Thread.currentThread().getName()); // Imprimir el nombre del hilo
-           // String productDescription = crawlProduct(productUrl);
-            String productDescription = "Enjoy The Creative Life with the TCL 40\" 1080p direct LED HDTV. It delivers premium picture quality and tremendous value in a sophisticated slim frame design perfect for bringing entertainment to any space. This flat screen LED HDTV features High Definition 1080p resolution for a sharper image and TCL True Color Technology for brilliant color and contrast. With direct LED backlighting, view darker blacks and luminous brightness while maintaining the best standards in energy efficiency.";
+            System.out.println("Creando nuevo hilo: " + Thread.currentThread().getName());
+           String productDescription = crawlProduct(productUrl);
+            //String productDescription = "Enjoy The Creative Life with the TCL 40\" 1080p direct LED HDTV. It delivers premium picture quality and tremendous value in a sophisticated slim frame design perfect for bringing entertainment to any space. This flat screen LED HDTV features High Definition 1080p resolution for a sharper image and TCL True Color Technology for brilliant color and contrast. With direct LED backlighting, view darker blacks and luminous brightness while maintaining the best standards in energy efficiency.";
             return filterWords(productDescription);
         });
     }
