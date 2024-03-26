@@ -3,6 +3,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -11,19 +13,18 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Service
+@Component
 public class AmazonCrawler {
+
     private static final Set<String> IRRELEVANT_WORDS = new HashSet<>(Arrays.asList("a", "the", "is", "and", "to", "this", "for", "in", "it"));
-    private final ExecutorService executorService = Executors.newFixedThreadPool(10); // Ejemplo: 10 hilos en el pool
-
-
 
     public CompletableFuture<String> crawlProductAsync(String productUrl) {
         return CompletableFuture.supplyAsync(() -> {
-            String productDescription = crawlProduct(productUrl);
-           // String productDescription = "Enjoy The Creative Life with the TCL 40\" 1080p direct LED HDTV. It delivers premium picture quality and tremendous value in a sophisticated slim frame design perfect for bringing entertainment to any space. This flat screen LED HDTV features High Definition 1080p resolution for a sharper image and TCL True Color Technology for brilliant color and contrast. With direct LED backlighting, view darker blacks and luminous brightness while maintaining the best standards in energy efficiency.";
+            System.out.println("Creando nuevo hilo: " + Thread.currentThread().getName()); // Imprimir el nombre del hilo
+           // String productDescription = crawlProduct(productUrl);
+            String productDescription = "Enjoy The Creative Life with the TCL 40\" 1080p direct LED HDTV. It delivers premium picture quality and tremendous value in a sophisticated slim frame design perfect for bringing entertainment to any space. This flat screen LED HDTV features High Definition 1080p resolution for a sharper image and TCL True Color Technology for brilliant color and contrast. With direct LED backlighting, view darker blacks and luminous brightness while maintaining the best standards in energy efficiency.";
             return filterWords(productDescription);
-        }, executorService);
+        });
     }
 
     public String crawlProduct(String productUrl) {
@@ -58,6 +59,4 @@ public class AmazonCrawler {
         }
         return String.join(" ", filteredWords);
     }
-
 }
-

@@ -19,14 +19,17 @@ import java.util.concurrent.ExecutionException;
 @RestController
 @RequestMapping("/api/wordcloud")
 public class CloudController {
-
-@Autowired
-private CloudService cloudService;
+    @Autowired
+    private CloudService cloudService;
+    @Autowired
+    private AmazonCrawler crawler;
 
     @CrossOrigin(origins = "*")
     @PostMapping("/generateWordCloud")
-    public ResponseEntity<Map<String, Integer>> generateWordCloud(@RequestParam String productUrl) throws Exception {
-        Map<String, Integer> wordFrequencies = cloudService.generateWordCloud(productUrl);
-        return new ResponseEntity<>(wordFrequencies, HttpStatus.OK);
+    public CompletableFuture<ResponseEntity<Map<String, Integer>>> generateWordCloud(@RequestParam String productUrl) {
+        return cloudService.generateWordCloudAsync(productUrl)
+                .thenApply(wordFrequencies -> new ResponseEntity<>(wordFrequencies, HttpStatus.OK));
     }
+
+
 }

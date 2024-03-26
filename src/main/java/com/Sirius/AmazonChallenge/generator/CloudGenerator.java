@@ -8,9 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class CloudGenerator{
-
-    @Async
+public class CloudGenerator {
     public Map<String, Integer> generateWordCloud(String productDescription) {
         Map<String, Integer> wordFrequencies = new HashMap<>();
         String[] words = productDescription.split("\\s+");
