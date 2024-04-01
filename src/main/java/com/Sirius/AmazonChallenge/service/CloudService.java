@@ -18,9 +18,14 @@ public class CloudService {
     private final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     @Autowired
-    private AmazonCrawler crawler;
+    private final AmazonCrawler crawler;
     @Autowired
-    private CloudGenerator generator;
+    private final CloudGenerator generator;
+
+    public CloudService(AmazonCrawler crawler, CloudGenerator generator) {
+        this.crawler = crawler;
+        this.generator = generator;
+    }
 
     @Cacheable(value = "wordCloudCache", key = "#productUrl")
     public CompletableFuture<Map<String, Integer>> generateWordCloudAsync(String productUrl) {
