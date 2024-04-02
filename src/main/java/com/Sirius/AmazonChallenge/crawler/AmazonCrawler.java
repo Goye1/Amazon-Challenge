@@ -10,6 +10,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
+
 @Component
 public class AmazonCrawler {
     private static final String SCRAPER_API_KEY = "81f389089361e3b543d9fa512a16a04e"; // Specific ScraperAPI Key.
