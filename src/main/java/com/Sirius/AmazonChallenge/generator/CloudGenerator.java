@@ -6,14 +6,14 @@ import java.util.stream.Collectors;
 @Component
 public class CloudGenerator {
 
-    private static final Set<String> IRRELEVANT_WORDS = new HashSet<>(Arrays.asList("a", "the", "is", "and", "to", "this", "for", "in", "it", "of", "with", "it"));
+    private static final Set<String> IRRELEVANT_WORDS = new HashSet<>(Arrays.asList("a", "the", "is", "and", "to", "this", "for", "in", "it", "of", "with", "it","an","at", "can"));
     public Map<String, Integer> generateWordCloud(String productDescription) {
         String filteredDescription = filterWords(productDescription);
-        Map<String, Integer> wordFrequencies = new HashMap<>();
+        HashMap<String, Integer> wordFrequencies = new HashMap<>();
         String[] words = filteredDescription.toLowerCase().split("\\W+");
-        //Add 1 for each time a word appears.
+        //For each word it gets its frequency(value) through the key(word) and adds 1 to it, if word not found, just 0.
         for (String word : words) {
-            if (!word.isEmpty()) {
+            if (!word.isEmpty()) { // \\W will prob. leave empty spaces.
                 wordFrequencies.put(word, wordFrequencies.getOrDefault(word, 0) + 1);
             }
         }
